@@ -47,12 +47,14 @@ PrintStringのようにコンソール画面への出力は以下です。
 色(FColor::のものです）、時間、文字スケールを指定できます。
 
 ```cpp
-DI_LOG_DISPLAY(MyProjectLogTemp, Red, 5.f, 3.f, TEXT("DI Logger Test LOG %d %f  %s"), 105, 50.3f, TEXT("FUN for ALL, ALL for FUN."));
-DI_LOG_DISPLAY_WARNING(MyProjectLogTemp, Red, 5.f, 3.f, TEXT("DI Logger Test WARNING %d %f  %s"), 105, 50.3f, TEXT("FUN for ALL, ALL for FUN."));
+DI_LOG_DISPLAY(MyProjectLogTemp, White, 5.f, 3.f, TEXT("DI Logger Test LOG %d %f  %s"), 105, 50.3f, TEXT("FUN for ALL, ALL for FUN."));
+DI_LOG_DISPLAY_WARNING(MyProjectLogTemp, Yellow, 5.f, 3.f, TEXT("DI Logger Test WARNING %d %f  %s"), 105, 50.3f, TEXT("FUN for ALL, ALL for FUN."));
 DI_LOG_DISPLAY_ERROR(MyProjectLogTemp, Red, 5.f, 3.f, TEXT("DI Logger Test ERROR %d %f  %s"), 105, 50.3f, TEXT("FUN for ALL, ALL for FUN."));
-DI_LOG_DISPLAY_VERBOSE(MyProjectLogTemp, Red, 5.f, 3.f, TEXT("DI Logger Test VERBOSE %d %f  %s"), 105, 50.3f, TEXT("FUN for ALL, ALL for FUN."));
-DI_LOG_DISPLAY_VERYVERBOSE(MyProjectLogTemp, Red, 5.f, 3.f, TEXT("DI Logger VERYVERBOSE Test %d %f  %s"), 105, 50.3f, TEXT("FUN for ALL, ALL for FUN."));
+DI_LOG_DISPLAY_VERBOSE(MyProjectLogTemp, White, 5.f, 3.f, TEXT("DI Logger Test VERBOSE %d %f  %s"), 105, 50.3f, TEXT("FUN for ALL, ALL for FUN."));
+DI_LOG_DISPLAY_VERYVERBOSE(MyProjectLogTemp, White, 5.f, 3.f, TEXT("DI Logger VERYVERBOSE Test %d %f  %s"), 105, 50.3f, TEXT("FUN for ALL, ALL for FUN."));
 ```
+
+![image](https://user-images.githubusercontent.com/1702680/88913961-d6481200-d29c-11ea-876d-b38f788e6640.png)
 
 アサートウィンドウを出すものも用意しています。
 
@@ -63,3 +65,5 @@ DI_LOG_ASSERT_ERROR(UE4TestLogSystem, TEXT("DI Logger Test ERROR %d %f  %s"), 10
 DI_LOG_ASSERT_VERBOSE(UE4TestLogSystem, TEXT("DI Logger Test VERBOSE %d %f  %s"), 105, 50.3f, TEXT("FUN for ALL, ALL for FUN."));
 DI_LOG_ASSERT_VERYVERBOSE(UE4TestLogSystem, TEXT("DI Logger Test VERYVERBOSE %d %f  %s"), 105, 50.3f, TEXT("FUN for ALL, ALL for FUN."));
 ```
+
+![image](https://user-images.githubusercontent.com/1702680/88913912-c7f9f600-d29c-11ea-85b1-cd418c01093a.png)
