@@ -6,7 +6,7 @@
 
 #define DILOGGER_SOURCE_FILE FString(TEXT(UE_LOG_SOURCE_FILE(__FILE__)))
 
-#if defined(_WIN64) || defined(_WIN32)
+#if PLATFORM_WINDOWS
 #define	DILOGGER_FUNCSIG FString(ANSI_TO_TCHAR(_FUNCSIG__))
 #else
 #define	DILOGGER_FUNCSIG FString(ANSI_TO_TCHAR(__FUNCTION__))
