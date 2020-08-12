@@ -45,7 +45,7 @@
 							FDebug::ProcessFatalError(); \
 						}, \
 						{ \
-							UDILogger::Log(FString::Printf(Format, ##__VA_ARGS__), this, DILOGGER_SOURCE_FILE, __LINE__, DILOGGER_FUNCSIG, &CategoryName, ELogVerbosity::Verbosity, WithAssertion, ToScreen, Time, FColor::Color, FVector2D(Scale, Scale)); \
+							UDILogger::Log(FString::Printf(Format, UE_LOG_Args...), this, DILOGGER_SOURCE_FILE, __LINE__, DILOGGER_FUNCSIG, &CategoryName, ELogVerbosity::Verbosity, WithAssertion, ToScreen, Time, FColor::Color, FVector2D(Scale, Scale)); \
 						} \
 					) \
 				}; \
