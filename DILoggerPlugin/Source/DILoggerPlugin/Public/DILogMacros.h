@@ -7,9 +7,9 @@
 #define DILOGGER_SOURCE_FILE FString(TEXT(UE_LOG_SOURCE_FILE(__FILE__)))
 
 #if defined(_WIN64) || defined(_WIN32)
-#define	DILOGGER_FUNCSIG	FString(TEXT(__FUNCSIG__))
+#define	DILOGGER_FUNCSIG FString(ANSI_TO_TCHAR(_FUNCSIG__))
 #else
-#define	DILOGGER_FUNCSIG	FString::Printf(TEXT("%s()"), TEXT(__FUNCTION__))
+#define	DILOGGER_FUNCSIG FString(ANSI_TO_TCHAR(__FUNCTION__))
 #endif
 
 #if NO_LOGGING
