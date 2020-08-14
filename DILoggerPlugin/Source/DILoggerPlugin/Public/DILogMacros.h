@@ -14,7 +14,7 @@
 
 #if NO_LOGGING
 	// This will only log Fatal errors
-	#define DI_LOG_CORE(CategoryName, Verbosity, Format, ...) \
+	#define DI_LOG_CORE(CategoryName, Verbosity, WithAssertion, ToScreen, Color, Time, Scale, Format, ...) \
 	{ \
 		static_assert(TIsArrayOrRefOfType<decltype(Format), TCHAR>::Value, "Formatting string must be a TCHAR array."); \
 		if (ELogVerbosity::Verbosity == ELogVerbosity::Fatal) \
