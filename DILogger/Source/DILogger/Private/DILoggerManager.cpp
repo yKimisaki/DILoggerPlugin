@@ -26,8 +26,8 @@ bool FDILoggerManager::CheckCurrentEditorLogger()
 #endif
 }
 
-TWeakInterfacePtr<IDILoggerSubsystemInterface> FDILoggerManager::CurrentRuntimeLogger = nullptr;
-TWeakInterfacePtr<IDILoggerSubsystemInterface> FDILoggerManager::CurrentEditorLogger = nullptr;
+TWeakInterfacePtr<IDILoggerSubsystemInterface> FDILoggerManager::CurrentRuntimeLogger;
+TWeakInterfacePtr<IDILoggerSubsystemInterface> FDILoggerManager::CurrentEditorLogger;
 
 void FDILoggerManager::SetLogHandler(IDILogHandlerInterface* _LogHandler)
 {
