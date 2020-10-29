@@ -2,7 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "Logging/LogMacros.h"
-#include "DILogger/Public/DILoggerSubsystem.h"
+#include "DILogger/Public/DILoggerManager.h"
 
 #define DILOGGER_SOURCE_FILE FString(TEXT(UE_LOG_SOURCE_FILE(__FILE__)))
 
@@ -35,7 +35,7 @@
 		{ \
 			UE_LOG_EXPAND_IS_FATAL(Verbosity, PREPROCESSOR_NOTHING, if (!CategoryName.IsSuppressed(ELogVerbosity::Verbosity))) \
 			{ \
-				auto UE_LOG_noinline_lambda = [this](const auto& LCategoryName, const auto& LFormat, const auto&... UE_LOG_Args) FORCENOINLINE \
+				auto UE_LOG_noinline_lambda = [](const auto& LCategoryName, const auto& LFormat, const auto&... UE_LOG_Args) FORCENOINLINE \
 				{ \
 					TRACE_LOG_MESSAGE(LCategoryName, Verbosity, LFormat, UE_LOG_Args...) \
 					UE_LOG_EXPAND_IS_FATAL(Verbosity, \
@@ -45,7 +45,7 @@
 							FDebug::ProcessFatalError(); \
 						}, \
 						{ \
-							UDILoggerSubsystem::Log(FString::Printf(Format, UE_LOG_Args...), this, DILOGGER_SOURCE_FILE, __LINE__, DILOGGER_FUNCSIG, &CategoryName, ELogVerbosity::Verbosity, WithAssertion, ToScreen, Time, FColor::Color, FVector2D(Scale, Scale)); \
+							FDILoggerManager::Log(FString::Printf(Format, UE_LOG_Args...), DILOGGER_SOURCE_FILE, __LINE__, DILOGGER_FUNCSIG, &CategoryName, ELogVerbosity::Verbosity, WithAssertion, ToScreen, Time, FColor::Color, FVector2D(Scale, Scale)); \
 						} \
 					) \
 				}; \

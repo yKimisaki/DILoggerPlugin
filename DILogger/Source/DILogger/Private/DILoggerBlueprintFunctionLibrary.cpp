@@ -1,28 +1,16 @@
 ﻿#include "DILoggerBlueprintFunctionLibrary.h"
 #include "Kismet/GameplayStatics.h"
-#include "DILogger/Public/DILoggerSubsystem.h"
+#include "DILogger/Public/DILoggerManager.h"
 
 void UDILoggerBlueprintFunctionLibrary::SetLogHandler(const TScriptInterface<IDILogHandlerInterface>& _LogHandler, const UObject* WorldContextObject)
 {
-	UGameInstance* GameInstance = UGameplayStatics::GetGameInstance(WorldContextObject);
-	if (!IsValid(GameInstance))
-	{
-		return;
-	}
-	
-	UDILoggerSubsystem* LoggerSubsystem = GameInstance->GetSubsystem<UDILoggerSubsystem>();
-	if (!IsValid(LoggerSubsystem))
-	{
-		return;
-	}
-
-	LoggerSubsystem->SetLogHandler(reinterpret_cast<IDILogHandlerInterface*>(_LogHandler.GetInterface()));
+	FDILoggerManager::SetLogHandler(reinterpret_cast<IDILogHandlerInterface*>(_LogHandler.GetInterface()));
 }
 
 void UDILoggerBlueprintFunctionLibrary::LogCore(const FString& Message, FName CategoryName, const UObject* Context, ELogVerbosity::Type Verbosity, bool WithAssertion, bool ToScreen, float TimeToDisplay, const FLinearColor& DisplayColor, const FVector2D& DisplayTextScale)
 {
 	FLogCategory<ELogVerbosity::Log, ELogVerbosity::All> BlueprintLogCategory(CategoryName);
-	UDILoggerSubsystem::Log(Message, Context, Context->GetFullName(), 0, TEXT("From Blueprint"), &BlueprintLogCategory, Verbosity, WithAssertion, ToScreen, TimeToDisplay, DisplayColor.ToFColor(false), DisplayTextScale);
+	FDILoggerManager::Log(Message, Context->GetFullName(), 0, TEXT("From Blueprint"), &BlueprintLogCategory, Verbosity, WithAssertion, ToScreen, TimeToDisplay, DisplayColor.ToFColor(false), DisplayTextScale);
 }
 
 void UDILoggerBlueprintFunctionLibrary::Log(const FString& Message, FName CategoryName, const UObject* Context, bool WithAssertion, bool ToScreen, float TimeToDisplay, FLinearColor DisplayColor, FVector2D DisplayTextScale)

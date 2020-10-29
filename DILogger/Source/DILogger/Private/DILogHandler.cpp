@@ -1,7 +1,7 @@
 ﻿#include "DILogHandler.h"
 #include "Misc/MessageDialog.h"
 
-void UDILogHandler::Log(const FString& Message, const void* Context, const FString& FileName, int32 Line, const FString& CalledFunction, const FLogCategoryBase* Category, ELogVerbosity::Type Verbosity, bool WithAssertion, bool ToScreen, float TimeToDisplay, const FColor& DisplayColor, const FVector2D& DisplayTextScale)
+void UDILogHandler::Log(const FString& Message, const FString& FileName, int32 Line, const FString& CalledFunction, const FLogCategoryBase* Category, ELogVerbosity::Type Verbosity, bool WithAssertion, bool ToScreen, float TimeToDisplay, const FColor& DisplayColor, const FVector2D& DisplayTextScale)
 {
 	FString _CalledFunction;
 	if (Line == 0 /* From Blueprint */)
