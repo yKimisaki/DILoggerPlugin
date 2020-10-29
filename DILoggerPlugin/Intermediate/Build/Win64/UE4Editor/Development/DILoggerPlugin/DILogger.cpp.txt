@@ -1,7 +1,0 @@
-K:\antares\Antares\Plugins\DILoggerPlugin\Intermediate\Build\Win64\UE4Editor\Development\DILoggerPlugin\Definitions.DILoggerPlugin.h
-K:\antares\Antares\Plugins\DILoggerPlugin\Source\DILoggerPlugin\Public\DILogger.h
-K:\antares\Antares\Plugins\DILoggerPlugin\Source\DILoggerPlugin/Public/DILogHandlerInterface.h
-K:\antares\Antares\Plugins\DILoggerPlugin\Intermediate\Build\Win64\UE4Editor\Inc\DILoggerPlugin\DILogHandlerInterface.generated.h
-K:\antares\Antares\Plugins\DILoggerPlugin\Intermediate\Build\Win64\UE4Editor\Inc\DILoggerPlugin\DILogger.generated.h
-K:\antares\Antares\Plugins\DILoggerPlugin\Source\DILoggerPlugin/Public/DILogHandler.h
-K:\antares\Antares\Plugins\DILoggerPlugin\Intermediate\Build\Win64\UE4Editor\Inc\DILoggerPlugin\DILogHandler.generated.h
