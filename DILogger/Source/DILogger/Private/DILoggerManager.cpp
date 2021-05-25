@@ -11,6 +11,9 @@
 #include "Editor.h"
 #endif
 
+TWeakInterfacePtr<IDILoggerSubsystemInterface> FDILoggerManager::CurrentRuntimeLogger;
+TWeakInterfacePtr<IDILoggerSubsystemInterface> FDILoggerManager::CurrentEditorLogger;
+
 bool FDILoggerManager::CheckCurrentEditorLogger()
 {
 #if WITH_EDITOR
@@ -26,9 +29,6 @@ bool FDILoggerManager::CheckCurrentEditorLogger()
 #endif
 }
 
-TWeakInterfacePtr<IDILoggerSubsystemInterface> FDILoggerManager::CurrentRuntimeLogger;
-TWeakInterfacePtr<IDILoggerSubsystemInterface> FDILoggerManager::CurrentEditorLogger;
-
 void FDILoggerManager::SetLogHandler(IDILogHandlerInterface* _LogHandler)
 {
 	if (CurrentRuntimeLogger.IsValid())
@@ -43,16 +43,16 @@ void FDILoggerManager::SetLogHandler(IDILogHandlerInterface* _LogHandler)
 #endif
 }
 
-void FDILoggerManager::Log(const FString& Message, const FString& FileName, int32 Line, const FString& CalledFunction, const FLogCategoryBase* Category, ELogVerbosity::Type Verbosity, bool WithAssertion, bool ToScreen, float TimeToDisplay, const FColor& DisplayColor, const FVector2D& DisplayTextScale)
+void FDILoggerManager::Log(const FString& Message, const FString& FileName, int32 Line, const FString& CalledFunction, const FLogCategoryBase* Category, ELogVerbosity::Type Verbosity, bool WithAssertion, bool WithFileLine, bool ToScreen, float TimeToDisplay, const FColor& DisplayColor, const FVector2D& DisplayTextScale)
 {
 	if (CurrentRuntimeLogger.IsValid())
 	{
-		CurrentRuntimeLogger->Log(Message, FileName, Line, CalledFunction, Category, Verbosity, WithAssertion, ToScreen, TimeToDisplay, DisplayColor, DisplayTextScale);
+		CurrentRuntimeLogger->Log(Message, FileName, Line, CalledFunction, Category, Verbosity, WithAssertion, WithFileLine, ToScreen, TimeToDisplay, DisplayColor, DisplayTextScale);
 	}
 #if WITH_EDITOR
 	else if (CheckCurrentEditorLogger())
 	{
-		CurrentEditorLogger->Log(Message, FileName, Line, CalledFunction, Category, Verbosity, WithAssertion, ToScreen, TimeToDisplay, DisplayColor, DisplayTextScale);
+		CurrentEditorLogger->Log(Message, FileName, Line, CalledFunction, Category, Verbosity, WithAssertion, WithFileLine, ToScreen, TimeToDisplay, DisplayColor, DisplayTextScale);
 	}
 #endif
 }

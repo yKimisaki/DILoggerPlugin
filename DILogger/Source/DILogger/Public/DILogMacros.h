@@ -27,7 +27,7 @@
 	}
 #else
 	// Conditional logging. Will only log if Condition is met.
-	#define DI_LOG_CORE(CategoryName, Verbosity, WithAssertion, ToScreen, Color, Time, Scale, Format, ...) \
+	#define DI_LOG_CORE(CategoryName, Verbosity, WithAssertion, WithFileLine, ToScreen, Color, Time, Scale, Format, ...) \
 	{ \
 		static_assert(TIsArrayOrRefOfType<decltype(Format), TCHAR>::Value, "Formatting string must be a TCHAR array."); \
 		static_assert((ELogVerbosity::Verbosity & ELogVerbosity::VerbosityMask) < ELogVerbosity::NumVerbosity && ELogVerbosity::Verbosity > 0, "Verbosity must be constant and in range."); \
@@ -35,17 +35,17 @@
 		{ \
 			UE_LOG_EXPAND_IS_FATAL(Verbosity, PREPROCESSOR_NOTHING, if (!CategoryName.IsSuppressed(ELogVerbosity::Verbosity))) \
 			{ \
-				auto UE_LOG_noinline_lambda = [](const auto& LCategoryName, const auto& LFormat, const auto&... UE_LOG_Args) FORCENOINLINE \
+				auto UE_LOG_noinline_lambda = [](const auto& LCategoryName, const auto& LFormat, const auto&... DI_LOG_Args) FORCENOINLINE \
 				{ \
-					TRACE_LOG_MESSAGE(LCategoryName, Verbosity, LFormat, UE_LOG_Args...) \
+					TRACE_LOG_MESSAGE(LCategoryName, Verbosity, LFormat, DI_LOG_Args...) \
 					UE_LOG_EXPAND_IS_FATAL(Verbosity, \
 						{ \
-							FMsg::Logf_Internal(UE_LOG_SOURCE_FILE(__FILE__), __LINE__, LCategoryName.GetCategoryName(), ELogVerbosity::Verbosity, LFormat, UE_LOG_Args...); \
+							FMsg::Logf_Internal(UE_LOG_SOURCE_FILE(__FILE__), __LINE__, LCategoryName.GetCategoryName(), ELogVerbosity::Verbosity, LFormat, DI_LOG_Args...); \
 							_DebugBreakAndPromptForRemote(); \
 							FDebug::ProcessFatalError(); \
 						}, \
 						{ \
-							FDILoggerManager::Log(FString::Printf(Format, UE_LOG_Args...), DILOGGER_SOURCE_FILE, __LINE__, DILOGGER_FUNCSIG, &CategoryName, ELogVerbosity::Verbosity, WithAssertion, ToScreen, Time, FColor::Color, FVector2D(Scale, Scale)); \
+							FDILoggerManager::Log(FString::Printf(Format, DI_LOG_Args...), DILOGGER_SOURCE_FILE, __LINE__, DILOGGER_FUNCSIG, &CategoryName, ELogVerbosity::Verbosity, WithAssertion, WithFileLine, ToScreen, Time, FColor::Color, FVector2D(Scale, Scale)); \
 						} \
 					) \
 				}; \
@@ -56,23 +56,25 @@
 	}
 #endif
 
-#define DI_LOG(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Log, false, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
-#define DI_LOG_VERBOSE(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Verbose, false, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
-#define DI_LOG_VERYVERBOSE(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, VeryVerbose, false, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
-#define DI_LOG_WARNING(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Warning, false, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
-#define DI_LOG_ERROR(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Error, false, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
-#define DI_LOG_FATAL(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Fatal, false, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
+#define DI_LOG(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Log, false, true, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
+#define DI_LOG_VERBOSE(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Verbose, false, true, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
+#define DI_LOG_VERYVERBOSE(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, VeryVerbose, false, true, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
+#define DI_LOG_WARNING(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Warning, false, true, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
+#define DI_LOG_ERROR(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Error, false, true, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
+#define DI_LOG_FATAL(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Fatal, false, true, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
 
-#define DI_LOG_DISPLAY(CategoryName, Color, Time, Scale, Format, ...) DI_LOG_CORE(CategoryName, Log, false, true, Color, Time, Scale, Format, ##__VA_ARGS__)
-#define DI_LOG_DISPLAY_VERBOSE(CategoryName, Color, Time, Scale, Format, ...) DI_LOG_CORE(CategoryName, Verbose, false, true, Color, Time, Scale, Format, ##__VA_ARGS__)
-#define DI_LOG_DISPLAY_VERYVERBOSE(CategoryName, Color, Time, Scale, Format, ...) DI_LOG_CORE(CategoryName, VeryVerbose, false, true, Color, Time, Scale, Format, ##__VA_ARGS__)
-#define DI_LOG_DISPLAY_WARNING(CategoryName, Color, Time, Scale, Format, ...) DI_LOG_CORE(CategoryName, Warning, false, true, Color, Time, Scale, Format, ##__VA_ARGS__)
-#define DI_LOG_DISPLAY_ERROR(CategoryName, Color, Time, Scale, Format, ...) DI_LOG_CORE(CategoryName, Error, false, true, Color, Time, Scale, Format, ##__VA_ARGS__)
-#define DI_LOG_DISPLAY_FATAL(CategoryName, Color, Time, Scale, Format, ...) DI_LOG_CORE(CategoryName, Fatal, false, true, Color, Time, Scale, Format, ##__VA_ARGS__)
+#define DI_LOG_DISPLAY(CategoryName, Color, Time, Scale, Format, ...) DI_LOG_CORE(CategoryName, Log, false, true, true, Color, Time, Scale, Format, ##__VA_ARGS__)
+#define DI_LOG_DISPLAY_VERBOSE(CategoryName, Color, Time, Scale, Format, ...) DI_LOG_CORE(CategoryName, Verbose, false, true, true, Color, Time, Scale, Format, ##__VA_ARGS__)
+#define DI_LOG_DISPLAY_VERYVERBOSE(CategoryName, Color, Time, Scale, Format, ...) DI_LOG_CORE(CategoryName, VeryVerbose, false, true, true, Color, Time, Scale, Format, ##__VA_ARGS__)
+#define DI_LOG_DISPLAY_WARNING(CategoryName, Color, Time, Scale, Format, ...) DI_LOG_CORE(CategoryName, Warning, false, true, true, Color, Time, Scale, Format, ##__VA_ARGS__)
+#define DI_LOG_DISPLAY_ERROR(CategoryName, Color, Time, Scale, Format, ...) DI_LOG_CORE(CategoryName, Error, false, true, true, Color, Time, Scale, Format, ##__VA_ARGS__)
+#define DI_LOG_DISPLAY_FATAL(CategoryName, Color, Time, Scale, Format, ...) DI_LOG_CORE(CategoryName, Fatal, false, true, true, Color, Time, Scale, Format, ##__VA_ARGS__)
 
-#define DI_LOG_ASSERT(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Log, true,  false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
-#define DI_LOG_ASSERT_VERBOSE(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Verbose, true,  false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
-#define DI_LOG_ASSERT_VERYVERBOSE(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, VeryVerbose, true,  false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
-#define DI_LOG_ASSERT_WARNING(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Warning, true, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
-#define DI_LOG_ASSERT_ERROR(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Error, true, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
-#define DI_LOG_ASSERT_FATAL(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Fatal, true,  false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
+#define DI_LOG_ASSERT(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Log, true, true, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
+#define DI_LOG_ASSERT_VERBOSE(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Verbose, true, true, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
+#define DI_LOG_ASSERT_VERYVERBOSE(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, VeryVerbose, true, true, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
+#define DI_LOG_ASSERT_WARNING(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Warning, true, true, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
+#define DI_LOG_ASSERT_ERROR(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Error, true, true, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
+#define DI_LOG_ASSERT_FATAL(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Fatal, true, true, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)
+
+#define DI_ECHO(CategoryName, Format, ...) DI_LOG_CORE(CategoryName, Verbose, false, false, false, Black, 0.f, 0.f, Format, ##__VA_ARGS__)

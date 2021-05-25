@@ -12,29 +12,29 @@ class DILOGGER_API UDILoggerBlueprintFunctionLibrary : public UBlueprintFunction
 
 private:
 
-	static void LogCore(const FString& Message, FName CategoryName, const UObject* Context, ELogVerbosity::Type Verbosity, bool WithAssertion, bool ToScreen, float TimeToDisplay, const FLinearColor& DisplayColor, const FVector2D& DisplayTextScale);
+	static void LogCore(const FString& Message, FName CategoryName, const UObject* Context, ELogVerbosity::Type Verbosity, bool WithAssertion, bool WithFileLine, bool ToScreen, float TimeToDisplay, const FLinearColor& DisplayColor, const FVector2D& DisplayTextScale);
 
 public:
 
 	UFUNCTION(BlueprintCallable, meta = (WorldContext = "WorldContextObject"))
 		static void SetLogHandler(const TScriptInterface<IDILogHandlerInterface>& _LogHandler, const UObject* WorldContextObject);
 
-	UFUNCTION(BlueprintCallable, meta = (DefaultToSelf = "Context", AdvancedDisplay = "Context, WithAssertion, ToScreen, TimeToDisplay, DisplayColor, DisplayTextScale"))
-		static void Log(const FString& Message, FName CategoryName, const UObject* Context, bool WithAssertion = false, bool ToScreen = false, float TimeToDisplay = 2.f, FLinearColor DisplayColor = FLinearColor(0.f, 0.66f, 1.f), FVector2D DisplayTextScale = FVector2D(1.f, 1.f));
+	UFUNCTION(BlueprintCallable, meta = (DefaultToSelf = "Context", AdvancedDisplay = "Context, WithAssertion, WithFileLine, ToScreen, TimeToDisplay, DisplayColor, DisplayTextScale"))
+		static void Log(const FString& Message, FName CategoryName, const UObject* Context, bool WithAssertion = false, bool WithFileLine = false, bool ToScreen = false, float TimeToDisplay = 2.f, FLinearColor DisplayColor = FLinearColor(0.f, 0.66f, 1.f), FVector2D DisplayTextScale = FVector2D(1.f, 1.f));
 
-	UFUNCTION(BlueprintCallable, meta = (DefaultToSelf = "Context", AdvancedDisplay = "Context, WithAssertion, ToScreen, TimeToDisplay, DisplayColor, DisplayTextScale"))
-		static void LogVerbose(const FString& Message, FName CategoryName, const UObject* Context, bool WithAssertion = false, bool ToScreen = false, float TimeToDisplay = 2.f, FLinearColor DisplayColor = FLinearColor(0.f, 0.66f, 1.f), FVector2D DisplayTextScale = FVector2D(1.f, 1.f));
+	UFUNCTION(BlueprintCallable, meta = (DefaultToSelf = "Context", AdvancedDisplay = "Context, WithAssertion, WithFileLine, ToScreen, TimeToDisplay, DisplayColor, DisplayTextScale"))
+		static void LogVerbose(const FString& Message, FName CategoryName, const UObject* Context, bool WithAssertion = false, bool WithFileLine = false, bool ToScreen = false, float TimeToDisplay = 2.f, FLinearColor DisplayColor = FLinearColor(0.f, 0.66f, 1.f), FVector2D DisplayTextScale = FVector2D(1.f, 1.f));
 
-	UFUNCTION(BlueprintCallable, meta = (DefaultToSelf = "Context", AdvancedDisplay = "Context, WithAssertion, ToScreen, TimeToDisplay, DisplayColor, DisplayTextScale"))
-		static void LogVeryVorbose(const FString& Message, FName CategoryName, const UObject* Context, bool WithAssertion = false, bool ToScreen = false, float TimeToDisplay = 2.f, FLinearColor DisplayColor = FLinearColor(0.f, 0.66f, 1.f), FVector2D DisplayTextScale = FVector2D(1.f, 1.f));
+	UFUNCTION(BlueprintCallable, meta = (DefaultToSelf = "Context", AdvancedDisplay = "Context, WithAssertion, WithFileLine, ToScreen, TimeToDisplay, DisplayColor, DisplayTextScale"))
+		static void LogVeryVorbose(const FString& Message, FName CategoryName, const UObject* Context, bool WithAssertion = false, bool WithFileLine = false, bool ToScreen = false, float TimeToDisplay = 2.f, FLinearColor DisplayColor = FLinearColor(0.f, 0.66f, 1.f), FVector2D DisplayTextScale = FVector2D(1.f, 1.f));
 
-	UFUNCTION(BlueprintCallable, meta = (DefaultToSelf = "Context", AdvancedDisplay = "Context, WithAssertion, ToScreen, TimeToDisplay, DisplayColor, DisplayTextScale"))
-		static void LogWarning(const FString& Message, FName CategoryName, const UObject* Context, bool WithAssertion = false, bool ToScreen = false, float TimeToDisplay = 2.f, FLinearColor DisplayColor = FLinearColor(0.f, 0.66f, 1.f), FVector2D DisplayTextScale = FVector2D(1.f, 1.f));
+	UFUNCTION(BlueprintCallable, meta = (DefaultToSelf = "Context", AdvancedDisplay = "Context, WithAssertion, WithFileLine, ToScreen, TimeToDisplay, DisplayColor, DisplayTextScale"))
+		static void LogWarning(const FString& Message, FName CategoryName, const UObject* Context, bool WithAssertion = false, bool WithFileLine = false, bool ToScreen = false, float TimeToDisplay = 2.f, FLinearColor DisplayColor = FLinearColor(0.f, 0.66f, 1.f), FVector2D DisplayTextScale = FVector2D(1.f, 1.f));
 
-	UFUNCTION(BlueprintCallable, meta = (DefaultToSelf = "Context", AdvancedDisplay = "Context, WithAssertion, ToScreen, TimeToDisplay, DisplayColor, DisplayTextScale"))
-		static void LogError(const FString& Message, FName CategoryName, const UObject* Context, bool WithAssertion = false, bool ToScreen = false, float TimeToDisplay = 2.f, FLinearColor DisplayColor = FLinearColor(0.f, 0.66f, 1.f), FVector2D DisplayTextScale = FVector2D(1.f, 1.f));
+	UFUNCTION(BlueprintCallable, meta = (DefaultToSelf = "Context", AdvancedDisplay = "Context, WithAssertion, WithFileLine, ToScreen, TimeToDisplay, DisplayColor, DisplayTextScale"))
+		static void LogError(const FString& Message, FName CategoryName, const UObject* Context, bool WithAssertion = false, bool WithFileLine = false, bool ToScreen = false, float TimeToDisplay = 2.f, FLinearColor DisplayColor = FLinearColor(0.f, 0.66f, 1.f), FVector2D DisplayTextScale = FVector2D(1.f, 1.f));
 
-	UFUNCTION(BlueprintCallable, meta = (DefaultToSelf = "Context", AdvancedDisplay = "Context, WithAssertion, ToScreen, TimeToDisplay, DisplayColor, DisplayTextScale"))
-		static void LogFatal(const FString& Message, FName CategoryName, const UObject* Context, bool WithAssertion = false, bool ToScreen = false, float TimeToDisplay = 2.f, FLinearColor DisplayColor = FLinearColor(0.f, 0.66f, 1.f), FVector2D DisplayTextScale = FVector2D(1.f, 1.f));
+	UFUNCTION(BlueprintCallable, meta = (DefaultToSelf = "Context", AdvancedDisplay = "Context, WithAssertion, WithFileLine, ToScreen, TimeToDisplay, DisplayColor, DisplayTextScale"))
+		static void LogFatal(const FString& Message, FName CategoryName, const UObject* Context, bool WithAssertion = false, bool WithFileLine = false, bool ToScreen = false, float TimeToDisplay = 2.f, FLinearColor DisplayColor = FLinearColor(0.f, 0.66f, 1.f), FVector2D DisplayTextScale = FVector2D(1.f, 1.f));
 
 };

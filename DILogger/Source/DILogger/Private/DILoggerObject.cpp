@@ -26,10 +26,10 @@ void UDILoggerObject::SetLogHandler(IDILogHandlerInterface* _LogHandler)
 	}
 }
 
-void UDILoggerObject::Log(const FString& Message, const FString& FileName, int32 Line, const FString& CalledFunction, const FLogCategoryBase* Category, ELogVerbosity::Type Verbosity, bool WithAssertion, bool ToScreen, float TimeToDisplay, const FColor& DisplayColor, const FVector2D& DisplayTextScale) const
+void UDILoggerObject::Log(const FString& Message, const FString& FileName, int32 Line, const FString& CalledFunction, const FLogCategoryBase* Category, ELogVerbosity::Type Verbosity, bool WithAssertion, bool WithFileLine, bool ToScreen, float TimeToDisplay, const FColor& DisplayColor, const FVector2D& DisplayTextScale) const
 {
 	if (LogHandler.IsValid())
 	{
-		LogHandler->Log(Message, FileName, Line, CalledFunction, Category, Verbosity, WithAssertion, ToScreen, TimeToDisplay, DisplayColor, DisplayTextScale);
+		LogHandler->Log(Message, FileName, Line, CalledFunction, Category, Verbosity, WithAssertion, WithFileLine, ToScreen, TimeToDisplay, DisplayColor, DisplayTextScale);
 	}
 }

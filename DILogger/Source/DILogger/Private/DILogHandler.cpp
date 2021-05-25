@@ -1,7 +1,7 @@
 ﻿#include "DILogHandler.h"
 #include "Misc/MessageDialog.h"
 
-void UDILogHandler::Log(const FString& Message, const FString& FileName, int32 Line, const FString& CalledFunction, const FLogCategoryBase* Category, ELogVerbosity::Type Verbosity, bool WithAssertion, bool ToScreen, float TimeToDisplay, const FColor& DisplayColor, const FVector2D& DisplayTextScale)
+void UDILogHandler::Log(const FString& Message, const FString& FileName, int32 Line, const FString& CalledFunction, const FLogCategoryBase* Category, ELogVerbosity::Type Verbosity, bool WithAssertion, bool WithFileLine, bool ToScreen, float TimeToDisplay, const FColor& DisplayColor, const FVector2D& DisplayTextScale)
 {
 	FString _CalledFunction;
 	if (Line == 0 /* From Blueprint */)
@@ -17,7 +17,15 @@ void UDILogHandler::Log(const FString& Message, const FString& FileName, int32 L
 	{
 		_CalledFunction = CalledFunction;
 	}
-	FMsg::Logf(TCHAR_TO_ANSI(*FileName), Line, Category->GetCategoryName(), Verbosity, TEXT("%s\n\t-FILE: %s:%d\n\t-FUNCTION: %s"), *Message, *FileName, Line, *_CalledFunction);
+
+	if (WithFileLine)
+	{
+		FMsg::Logf(TCHAR_TO_ANSI(*FileName), Line, Category->GetCategoryName(), Verbosity, TEXT("%s\n\t-FILE: %s:%d\n\t-FUNCTION: %s"), *Message, *FileName, Line, *_CalledFunction);
+	}
+	else
+	{
+		FMsg::Logf(TCHAR_TO_ANSI(*FileName), Line, Category->GetCategoryName(), Verbosity, TEXT("%s"), *Message);
+	}
 
 	if (WithAssertion)
 	{
