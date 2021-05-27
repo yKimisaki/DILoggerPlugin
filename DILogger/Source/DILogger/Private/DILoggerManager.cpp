@@ -21,7 +21,7 @@ bool FDILoggerManager::CheckCurrentEditorLogger()
 	{
 		UDILoggerObject* LoggerInstance = NewObject<UDILoggerObject>(GEditor);
 		LoggerInstance->Initialize();
-		CurrentEditorLogger = *LoggerInstance;
+		CurrentEditorLogger = TWeakInterfacePtr<IDILoggerSubsystemInterface>(LoggerInstance);
 	}
 	return CurrentEditorLogger.IsValid();
 #else

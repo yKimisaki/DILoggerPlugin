@@ -11,7 +11,7 @@ void UDILoggerSubsystem::Initialize(FSubsystemCollectionBase& Collection)
 	SetLogHandler(NewLogHandler);
 
 	IDILoggerSubsystemInterface* SubsystemInterface = Cast<IDILoggerSubsystemInterface>(this);
-	FDILoggerManager::CurrentRuntimeLogger = *SubsystemInterface;
+	FDILoggerManager::CurrentRuntimeLogger = TWeakInterfacePtr<IDILoggerSubsystemInterface>(SubsystemInterface);
 }
 
 void UDILoggerSubsystem::Deinitialize()
@@ -30,7 +30,7 @@ void UDILoggerSubsystem::SetLogHandler(IDILogHandlerInterface* _LogHandler)
 
 	if (_LogHandler != nullptr)
 	{
-		LogHandler = *_LogHandler;
+		LogHandler = TWeakInterfacePtr<IDILogHandlerInterface>(_LogHandler);
 	}
 	else
 	{
