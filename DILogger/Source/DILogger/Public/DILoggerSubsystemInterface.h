@@ -3,6 +3,7 @@
 #include "CoreMinimal.h"
 #include "Logging/LogCategory.h"
 #include "Logging/LogVerbosity.h"
+#include "UObject/Interface.h"
 #include "DILoggerSubsystemInterface.generated.h"
 
 UINTERFACE()
