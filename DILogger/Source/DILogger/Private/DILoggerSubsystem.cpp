@@ -23,7 +23,7 @@ void UDILoggerSubsystem::Deinitialize()
 
 void UDILoggerSubsystem::SetLogHandler(IDILogHandlerInterface* _LogHandler)
 {
-	if (LogHandler.IsValid() && &*LogHandler == _LogHandler)
+	if (LogHandler.Get() == _LogHandler)
 	{
 		return;
 	}
