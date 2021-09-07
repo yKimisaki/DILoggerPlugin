@@ -7,7 +7,7 @@ void UDILogHandler::Log(const FString& Message, const FString& FileName, int32 L
 	if (Line == 0 /* From Blueprint */)
 	{
 		TArray<FString> Callstacks;
-		FFrame::GetScriptCallstack().ParseIntoArray(Callstacks, L"\n");
+		FFrame::GetScriptCallstack().ParseIntoArray(Callstacks, TEXT("\n"));
 		if (Callstacks.Num() > 1)
 		{
 			_CalledFunction = Callstacks.Last();
