@@ -11,7 +11,7 @@ void UDILoggerObject::Initialize()
 
 void UDILoggerObject::SetLogHandler(IDILogHandlerInterface* _LogHandler)
 {
-	if (&*LogHandler == _LogHandler)
+	if (LogHandler.IsValid() && &*LogHandler == _LogHandler)
 	{
 		return;
 	}
